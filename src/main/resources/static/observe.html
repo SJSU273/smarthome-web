@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="thumbnail" style="position:relative">
+            <img ng-src="{{screenSrc}}" alt="TV Screen" />
+            <div id="img_lock" ng-show="isLocked">
+                <img src="img/slock.jpg" style="width:100%"> </img>
+            </div>
+        </div>
+        <div style="margin-top:-20px;margin-bottom:20px">Channel : {{channelName}}</div>
+        <div>
+            <progressbar ng-show="cd" class="progress-striped active" animate="true" type="danger" max="mTime" value="cd"><b>{{cdS}} / {{mTimeS}}</b></progressbar>
+        </div>
+        <div>
+            <button class="btn btn-success" ng-click="observeButtonClick()">{{observeButton}}</button>
+            <button class="btn btn-danger" ng-click="lockButtonClick()">{{lockButton}}</button>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Channel Records</div>
+            <div class="panel-body no-padding">
+              <table class="table table-hover no-margin-bottom">
+                  <thead>
+                    <th class="col-md-1">No.</th>
+                    <th class="col-md-1">ID</th>
+                    <th class="col-md-3">Channel</th>
+                    <th class="col-md-3">Start At</th>
+                    <th class="col-md-3">End At</th>
+                    <th class="col-md-1">Duration(s)</th>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="record in records | orderBy : 'endTime' : true" ng-if="$index <= 5" ng-class="{'bg-gray' : $index == 0}">
+                        <td>{{$index + 1}}</td>
+                        <td>{{record.channelID}}</td>
+                        <td>{{record.channelName}}</td>
+                        <td>{{record.startTime | date : 'medium'}}</td>
+                        <td>{{record.endTime | date : 'medium'}}</td>
+                        <td> <span ng-if="record.endTime">{{Math.round((record.endTime - record.startTime) / 1000)}} </span></td>
+                    </tr>
+                  </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
